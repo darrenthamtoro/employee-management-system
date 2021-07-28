@@ -98,6 +98,29 @@ function viewEmployees() {
     });
 }
 
+function addDept() {
+
+    console.log("Addimg data to department table ");
+    inquirer.prompt(
+        {
+            type: "input",
+            name: "addDepartments",
+            message: "What department would you like to add?"
+        }
+    ).then(response => {
+        const sql = `INSERT INTO department (name)  VALUES (?)`;
+        db.query(sql, response.addDepartments, (err, result) => {
+            if (err) { console.log(err) }
+            else {
+                console.log("Added a new depat succesfully ");
+
+                //ask question 
+                init();
+            }
+        })
+    })
+}
+
 /*
  {
             type: "input",
