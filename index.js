@@ -42,16 +42,17 @@ function init() {
             addDept();
         } else if (response.userInput === "View all Roles") {
             viewRoles();
+        } else if (response.userInput === "Add Role") {
+            addRole();
         } else if (response.userInput === "View all Employees") {
             viewEmployees();
-        }
-        else {
+        } else if (response.userInput === "Add Employee") {
+            addEmployee();
+        } else {
             console.log("Goodbye!!");
             process.exit();
-
         }
     })
-
 }
 
 
@@ -60,7 +61,7 @@ function init() {
 init();
 
 function viewDepart() {
-    console.log("getting departments from databse ... ");
+    console.log("getting departments from database ... ");
     //Query database
     db.query(`SELECT * FROM department`, function (err, results) {
         console.table(results);
@@ -71,7 +72,7 @@ function viewDepart() {
 }
 
 function viewRoles() {
-    console.log("getting roles from databse ... ");
+    console.log("getting roles from database ... ");
 
     //tablename.columnname 
     const sqlQuery = `SELECT role.id,  role.title,role.salary,  department.name AS 'Department' 
@@ -88,7 +89,7 @@ function viewRoles() {
 }
 
 function viewEmployees() {
-    console.log("getting employees from databse ... ");
+    console.log("getting employees from database ... ");
     //Query database
     db.query(`SELECT * FROM employee`, function (err, results) {
         console.table(results);
@@ -100,11 +101,56 @@ function viewEmployees() {
 
 function addDept() {
 
-    console.log("Addimg data to department table ");
+    console.log("Adding data to department table ");
     inquirer.prompt(
         {
             type: "input",
             name: "addDepartments",
+            message: "What department would you like to add?"
+        }
+    ).then(response => {
+        const sql = `INSERT INTO department (name)  VALUES (?)`;
+        db.query(sql, response.addDepartments, (err, result) => {
+            if (err) { console.log(err) }
+            else {
+                console.log("Added a new department succesfully ");
+
+                //ask question 
+                init();
+            }
+        })
+    })
+}
+function addRole() {
+
+    console.log("Adding data to roles table ");
+    inquirer.prompt(
+        {
+            type: "input",
+            name: "addRole",
+            message: "What role would you like to add?"
+        }
+    ).then(response => {
+        const sql = `INSERT INTO role (name)  VALUES (?)`;
+        db.query(sql, response.addRole, (err, result) => {
+            if (err) { console.log(err) }
+            else {
+                console.log("Added a new role succesfully ");
+
+                //ask question 
+                init();
+            }
+        })
+    })
+}
+/*
+function addEmployee() {
+
+    console.log("Adding data to employee table ");
+    inquirer.prompt(
+        {
+            type: "input",
+            name: "addEmployee",
             message: "What department would you like to add?"
         }
     ).then(response => {
@@ -120,6 +166,7 @@ function addDept() {
         })
     })
 }
+*/
 
 /*
  {
