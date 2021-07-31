@@ -143,7 +143,7 @@ function addRole() {
         })
     })
 }
-/*
+
 function addEmployee() {
 
     console.log("Adding data to employee table ");
@@ -151,20 +151,29 @@ function addEmployee() {
         {
             type: "input",
             name: "addEmployee",
-            message: "What department would you like to add?"
+            message: "What is the first name of your employee?"
         }
     ).then(response => {
-        const sql = `INSERT INTO department (name)  VALUES (?)`;
-        db.query(sql, response.addDepartments, (err, result) => {
+        const sql = `INSERT INTO employee (first_name)  VALUES (?)`;
+        db.query(sql, response.addEmployee, (err, result) => {
             if (err) { console.log(err) }
             else {
-                console.log("Added a new depat succesfully ");
+                console.log("Added a new employee succesfully ");
 
                 //ask question 
                 init();
             }
         })
     })
+}
+/*
+function updateEmployees(){
+    console.log("Updating employee table");
+    inquirer.prompt(
+        {
+            
+        }
+    )
 }
 */
 
